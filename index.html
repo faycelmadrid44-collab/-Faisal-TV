@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Faisal TV Pro Max</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:#000;color:#fff;font-family:Tahoma;overflow-x:hidden}
+:root{--gold:#FFD700}
+.hidden{display:none}
+.header{background:#111;padding:10px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--gold);position:sticky;top:0;z-index:9}
+.logo{color:var(--gold);font-size:18px;font-weight:bold;display:flex;align-items:center;gap:6px}
+.icons{display:flex;gap:15px}
+.icons button{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:5px}
+.telegram{color:var(--gold)!important;font-size:12px;font-weight:bold}
+.tabs{display:flex;background:#111;overflow-x:auto}
+.tabs div{flex:1;min-width:80px;text-align:center;padding:12px;color:#888;cursor:pointer;font-size:13px;white-space:nowrap}
+.tabs .active{color:var(--gold);border-bottom:2px solid var(--gold)}
+.sub{display:flex;gap:8px;padding:10px;overflow-x:auto;background:#0a0a0a}
+.sub button{padding:8px 14px;background:#222;border:1px solid #444;border-radius:20px;color:#fff;cursor:pointer;white-space:nowrap;font-size:12px}
+.sub .active{background:var(--gold);color:#000}
+.grid{padding:8px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding-bottom:70px}
+.card{background:#181818;border:1px solid #333;border-radius:8px;padding:10px 4px;text-align:center;font-size:10px;cursor:pointer;min-height:85px;transition:0.2s}
+.card:hover{border-color:var(--gold);transform:scale(1.02)}
+.card i{color:var(--gold);font-size:22px;margin-bottom:5px;display:block}
+.card-title{word-break:break-word;line-height:1.3}
+.section-title{padding:15px 10px;font-size:16px;color:var(--gold);border-bottom:1px solid #333;margin-bottom:8px}
+.footer{position:fixed;bottom:0;width:100%;display:flex;background:#111;border-top:2px solid var(--gold);z-index:9}
+.footer div{flex:1;text-align:center;padding:8px 0;color:#888;font-size:10px;cursor:pointer}
+.footer .active{color:var(--gold)}
+.footer i{display:block;font-size:18px;margin-bottom:3px}
+.bright{filter:brightness(1.8)}
+
+/* مشغل الفيديو */
+.player{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:99;display:flex;align-items:center;justify-content:center}
+.player video{width:100%;height:100%;object-fit:contain}
+.player-controls{position:absolute;bottom:0;left:0;width:100%;background:linear-gradient(transparent,rgba(0,0,0,0.9));padding:10px;display:flex;justify-content:space-around;opacity:0;transition:0.3s}
+.player:hover .player-controls{opacity:1}
+.player-controls button{background:rgba(0,0,0,0.7);border:1px solid #555;color:#fff;border-radius:50%;width:32px;height:32px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.close-player{position:absolute;top:15px;right:15px;background:rgba(0,0,0,0.7);border:1px solid #555;color:#fff;border-radius:50%;width:32px;height:32px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+
+/* نافذة الإعدادات والخروج */
+.popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:100;display:flex;align-items:center;justify-content:center}
+.popup-box{background:#181818;border:2px solid var(--gold);border-radius:12px;padding:20px;text-align:center;width:85%;max-width:320px}
+.popup-box h3{color:var(--gold);margin-bottom:15px;font-size:16px}
+.popup-box p{margin-bottom:15px;color:#ccc;font-size:13px}
+.popup-box button{padding:10px 20px;margin:5px;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:bold}
+.btn-yes{background:var(--gold);color:#000}
+.btn-no{background:#333;color:#fff}
+</style></head><body>
+
+<div class="header">
+  <div class="icons">
+    <button onclick="showSettings()"><i class="fas fa-ellipsis-vertical"></i></button>
+    <button class="telegram" onclick="window.open('https://t.me/FAISALDz44','_blank')">@FAISALDz44</button>
+  </div>
+  <div class="logo"><i class="fas fa-crown"></i> Faisal TV</div>
+  <div class="icons">
+    <button onclick="document.body.classList.toggle('bright')"><i class="fas fa-sun"></i></button>
+    <button onclick="location.reload()"><i class="fas fa-rotate"></i></button>
+    <button onclick="showSettings()"><i class="fas fa-search"></i></button>
+  </div>
+</div>
+
+<div class="tabs">
+  <div onclick="showTab(0)">المباريات</div><div onclick="showTab(1)">المسلسلات</div><div onclick="showTab(2)">الأفلام</div>
+  <div onclick="showTab(3)">الرياضة</div><div onclick="showTab(4)">الدين</div><div onclick="showTab(5)">وثائقي</div>
+  <div onclick="showTab(6)">حيوانات</div><div class="active" onclick="showTab(7)">مباشر</div>
+</div>
+
+<div id="tab0" class="hidden"><div class="section-title">⚽ مباريات اليوم</div><div class="grid" id="match-grid"></div></div>
+<div id="tab1" class="hidden"><div class="section-title">📺 اختر نوع المسلسلات</div><div class="sub"><button class="active" onclick="showList('series','turkish',this)">🇹🇷 تركي</button><button onclick="showList('series','arabic',this)">🇸🇦 عربي</button><button onclick="showList('series','indian',this)">🇮🇳 هندي</button><button onclick="showList('series','foreign',this)">🌍 اجنبي</button></div><div id="series-grid" class="grid"></div></div>
+<div id="tab2" class="hidden"><div class="section-title">🎬 اختر نوع الأفلام</div><div class="sub"><button class="active" onclick="showList('movies','action',this)">🔥 اكشن</button><button onclick="showList('movies','drama',this)">😢 دراما</button><button onclick="showList('movies','adventure',this)">🏹 مغامرات</button><button onclick="showList('movies','viking',this)">⚔️ فايكينج</button><button onclick="showList('movies','forest',this)">🌲 الغابة</button></div><div id="movies-grid" class="grid"></div></div>
+<div id="tab3" class="hidden"><div class="section-title">⚽ قنوات الرياضة</div><div class="grid" id="sport-grid"></div></div>
+<div id="tab4" class="hidden"><div class="section-title">🕌 قنوات الدين والقرآن</div><div class="grid" id="din-grid"></div></div>
+<div id="tab5" class="hidden"><div class="section-title">🌍 أفلام وثائقية</div><div class="grid" id="doc-grid"></div></div>
+<div id="tab6" class="hidden"><div class="section-title">🐾 قنوات الحيوانات</div><div class="grid" id="animal-grid"></div></div>
+<div id="tab7"><div class="sub"><button onclick="alert('قسم الكرتون')">👶 كرتون</button><button onclick="alert('قسم الأخبار')">📰 الأخبار</button><button class="active" onclick="alert('قسم الرياضة')">⚽ الرياضة</button><button onclick="alert('جميع القنوات: 2991')">📁 الكل 2991</button></div><div class="grid" id="live-grid"></div></div>
+
+<div class="footer">
+  <div onclick="alert('المفضلة')"><i class="fas fa-heart"></i>المفضلة</div><div class="active"><i class="fas fa-broadcast-tower"></i>مباشر</div>
+  <div onclick="showTab(0)"><i class="fas fa-trophy"></i>المباريات</div><div onclick="showTab(1)"><i class="fas fa-tv"></i>المسلسلات</div>
+  <div onclick="showTab(2)"><i class="fas fa-film"></i>الأفلام</div><div onclick="showTab(7)"><i class="fas fa-home"></i>الرئيسية</div>
+</div>
+
+<!-- مشغل الفيديو -->
+<div id="player" class="player hidden" onclick="document.querySelector('.player-controls').style.opacity='1'">
+  <button class="close-player" onclick="closePlayer()"><i class="fas fa-times"></i></button>
+  <video id="video"></video>
+  <div class="player-controls">
+    <button onclick="alert('اختر الجودة:\n4K\nFHD\nHD\nSD')"><i class="fas fa-gear"></i></button>
+    <button onclick="toggleFullscreen()"><i class="fas fa-expand"></i></button>
+    <button onclick="alert('القناة السابقة')"><i class="fas fa-backward"></i></button>
+    <button onclick="playPause()"><i id="playIcon" class="fas fa-play"></i></button>
+    <button onclick="alert('القناة التالية')"><i class="fas fa-forward"></i></button>
+  </div>
+</div>
+
+<!-- نافذة منبثقة -->
+<div id="popup" class="popup hidden">
+  <div class="popup-box">
+    <h3 id="popup-title"></h3>
+    <p id="popup-body"></p>
+    <button class="btn-yes" onclick="popupAction()">Yes 😢</button>
+    <button class="btn-no" onclick="closePopup()">No</button>
+  </div>
+</div>
+
+<script>
+const data = {
+  matches:['ريال مدريد vs برشلونة','مان سيتي vs ليفربول','الجزائر vs المغرب','باريس vs بايرن'],
+  channels:['AR| beIN MAX 1| 4K','AR| beIN MAX 1| FHD','BEIN 4K WC 2026','SSC 1 HD','SSC 2 HD','MBC ACTION HD','OSN YA HALA HD','DUBAI SPORTS HD'],
+  sport:['beIN SPORTS 1','beIN SPORTS 2','beIN SPORTS 3','SSC SPORT 1','ON SPORT','AD SPORT','AL KASS HD'],
+  din:['قناة القرآن الكريم','قناة السنة النبوية','قناة المجد','اقرأ','رسالة','السعودية قرآن'],
+  doc:['ناشيونال جيو وثائقي','وثائقي تاريخ','وثائقي علوم','وثائقي سفر','وثائقي طبيعة'],
+  animal:['National Geographic Wild','Animal Planet','Discovery Channel','BBC Earth'],
+  series:{turkish:['الحفرة - الحلقة 1','الحفرة - الحلقة 2','قيامة ارطغرل - الحلقة 1','عثمان - الحلقة 1'],arabic:['باب الحارة - ج1 ح1','الهيبة - ج1 ح1','العاصوف - ج1 ح1'],indian:['مسلسل هندي 1 - ح1','مسلسل هندي 2 - ح1'],foreign:['Game of Thrones - S1E1','Breaking Bad - S1E1','Vikings - S1E1']},
+  movies:{action:['فيلم اكشن 2024','جون ويك 4','مهمة مستحيلة 7'],drama:['فيلم دراما 2023','الاب الروحي','فورست جامب'],adventure:['فيلم مغامرات 2024','انديانا جونز','جوراسيك بارك'],viking:['الفايكينج الاخير','The Northman','King Arthur'],forest:['الغابة المسكونة','Into The Forest','The Revenant']}
+};
+
+let exitPopupShown = false; // هذا باش ما يخرجش عند الدخول
+
+function playVideo(name){document.getElementById('player').classList.remove('hidden');alert('جاري تشغيل: '+name);}
+function closePlayer(){document.getElementById('player').classList.add('hidden');}
+function playPause(){let icon=document.getElementById('playIcon');icon.className=icon.className=='fas fa-play'?'fas fa-pause':'fas fa-play';}
+function toggleFullscreen(){let elem=document.getElementById('player');if(!document.fullscreenElement){elem.requestFullscreen();}else{document.exitFullscreen();}}
+function showSettings(){document.getElementById('popup-title').innerText='⚙️ إعدادات التطبيق';document.getElementById('popup-body').innerHTML='الإصدار: 1.0.0<br>المطور: Faisal TV<br>التليجرام: @FAISALDz44';document.getElementById('popup').classList.remove('hidden');}
+function closePopup(){document.getElementById('popup').classList.add('hidden');}
+function popupAction(){window.close();}
+
+// تنبيه الخروج يخدم غير كي تضغط رجوع
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape' && !exitPopupShown){
+    e.preventDefault();
+    showExit();
+    exitPopupShown = true;
+  }
+});
+
+function showExit(){
+  document.getElementById('popup-title').innerText='هل تريد الخروج؟ 😢';
+  document.getElementById('popup-body').innerHTML='';
+  document.getElementById('popup').classList.remove('hidden');
+}
+
+function showTab(n){for(let i=0;i<8;i++)document.getElementById('tab'+i).classList.add('hidden');document.getElementById('tab'+n).classList.remove('hidden');document.querySelectorAll('.tabs div').forEach((e,i)=>e.classList.toggle('active',i==n));if(n==0)loadGrid('match-grid',data.matches,'fas fa-trophy');if(n==1)showList('series','turkish');if(n==2)showList('movies','action');if(n==3)loadGrid('sport-grid',data.sport,'fas fa-futbol');if(n==4)loadGrid('din-grid',data.din,'fas fa-mosque');if(n==5)loadGrid('doc-grid',data.doc,'fas fa-globe');if(n==6)loadGrid('animal-grid',data.animal,'fas fa-paw');if(n==7)loadGrid('live-grid',data.channels,'fas fa-tv');}
+function loadGrid(id,list,icon){let g=document.getElementById(id);g.innerHTML='';list.forEach(item=>{g.innerHTML+=`<div class="card" onclick="playVideo('${item}')"><i class="${icon}"></i><div class="card-title">${item}</div></div>`});}
+function showList(type,cat,btn){let g=document.getElementById(type+'-grid');g.innerHTML='';data[type][cat].forEach(item=>{g.innerHTML+=`<div class="card" onclick="playVideo('${item}')"><i class="fas fa-play"></i><div class="card-title">${item}</div></div>`});if(btn){btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}}
+showTab(7);
+</script></body></html>

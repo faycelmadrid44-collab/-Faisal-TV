@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <title>Faisal TV - فيصل تي في</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen active">
+        <div class="login-container">
+            <div class="logo-section">
+                <div class="crown">👑</div>
+                <h1 class="logo-title">Faisal TV</h1>
+                <p class="logo-subtitle">فيصل تي في</p>
+            </div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="input-group">
+                    <i class="fas fa-server"></i>
+                    <input type="text" id="hostInput" placeholder="Server Host" value="http://longsat.xyz:80" required>
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="userInput" placeholder="Username" value="delfraissy" required>
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="passInput" placeholder="Password" value="aout0023" required>
+                </div>
+                
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+                </button>
+                
+                <div class="loading-spinner" id="loadingSpinner" style="display:none;">
+                    <div class="spinner"></div>
+                    <p>جاري الاتصال...</p>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Main Screen -->
+    <div id="mainScreen" class="screen">
+        <div class="header">
+            <div class="header-left">
+                <button class="btn-icon" id="searchBtn" title="البحث">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            
+            <div class="header-center">
+                <div class="crown-logo">👑</div>
+                <h1 class="app-title">Faisal TV</h1>
+            </div>
+            
+            <div class="header-right">
+                <a href="https://t.me/FAISALDz44" class="btn-telegram" title="Telegram" target="_blank">
+                    <i class="fab fa-telegram"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" data-category="channels">
+                <i class="fas fa-tv"></i>
+                <span>القنوات</span>
+            </button>
+            <button class="tab-btn" data-category="movies">
+                <i class="fas fa-film"></i>
+                <span>الأفلام</span>
+            </button>
+            <button class="tab-btn" data-category="series">
+                <i class="fas fa-play-circle"></i>
+                <span>المسلسلات</span>
+            </button>
+            <button class="tab-btn" data-category="other">
+                <i class="fas fa-folder"></i>
+                <span>أخرى</span>
+            </button>
+        </div>
+        
+        <!-- Sub Categories -->
+        <div id="subCategoriesContainer" class="sub-categories">
+            <!-- Sub categories will be loaded here -->
+        </div>
+        
+        <!-- Content Area -->
+        <div class="content-area">
+            <div id="itemsGrid" class="items-grid">
+                <!-- Items will be loaded here -->
+            </div>
+        </div>
+        
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <button class="nav-item active" data-section="home">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </button>
+            <button class="nav-item" data-section="favorites">
+                <i class="fas fa-heart"></i>
+                <span>المفضلة</span>
+            </button>
+            <button class="nav-item" data-section="history">
+                <i class="fas fa-history"></i>
+                <span>السجل</span>
+            </button>
+            <button class="nav-item" data-section="settings">
+                <i class="fas fa-cog"></i>
+                <span>الإعدادات</span>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Player Screen -->
+    <div id="playerScreen" class="screen">
+        <div class="player-container">
+            <video id="videoPlayer" class="video-player" controls>
+                متصفحك لا يدعم تشغيل الفيديو
+            </video>
+            
+            <div class="player-controls" id="playerControls">
+                <button id="qualityBtn" class="player-btn quality-btn" title="اختر الجودة">
+                    <i class="fas fa-cog"></i> الجودة
+                </button>
+                <button id="fullscreenBtn" class="player-btn" title="ملء الشاشة">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <button id="exitBtn" class="player-btn exit-btn" title="خروج">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- Quality Menu -->
+            <div id="qualityMenu" class="quality-menu" style="display:none;">
+                <div class="quality-options">
+                    <!-- Quality options will be added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Exit Confirmation Modal -->
+    <div id="exitModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="exit-emoji">😢</div>
+            <h2>هل تريد المغادرة؟</h2>
+            <div class="modal-buttons">
+                <button class="btn-yes" id="confirmExit">نعم</button>
+                <button class="btn-no" id="cancelExit">لا</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="xtream-api.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
